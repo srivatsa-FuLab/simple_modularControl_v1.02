@@ -44,6 +44,8 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 </pre>
 
 ## How it works:
+
+Here is how the default configuration can be described in blocks
 ![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works.png?raw=true)
 
 * The instrument `driver` defines how the physical instrument data (eg. in V) can be converted to digital data and vice versa.
@@ -51,7 +53,9 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 	* For instruments that need to talk via the DAQ, the daq wrapper also takes care of multiple device synchronization (eg. synchronize counter, voltage output to piezos for a 2-D confocal scan)
 * The `mc_object` contains data and all the information required for user interactivity through the GUI (eg. type of input; say x-axis, integration time, etc.)
 
-![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true)
+Here is how the GUI can be described in blocks
+
+<img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="600" height="400">
 
 
 ## How to configure a new microscope:
