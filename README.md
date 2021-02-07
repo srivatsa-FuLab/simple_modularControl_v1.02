@@ -43,7 +43,7 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
 
-## How it works
+## How it works:
 ![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works.png?raw=true)
 
 * The instrument `driver` defines how the physical instrument data (eg. in V) can be converted to digital data and vice versa.
@@ -54,5 +54,5 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 ![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true)
 
 
-## How to configure a new microscope
+## How to configure a new microscope:
 WIP
