@@ -12,24 +12,25 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 	*       Callbacks.m			Define what action the GUI elements perform
 	*       setupObjects.m			Ensure the GUI can interface with the instruments
 
-
 * mcInstruments
-	*   	@mcaDAQ				DAQ output devices
+	* @mcaDAQ	DAQ output devices
+	
 		*       mcaDAQ.m		Wrapper __[Do not modify!]__
 		*       piezoConfig.m		Piezo driver
 		*       galvoConfig.m		Galvo driver
 		*       analogConfig.m 		[template]
 		*       digitalConfig.m		[template]	
-		
-	*		@mcaMicro
-		*       mcaMicro.m		Wrapper __[Do not modify!]__
-		*       microConfig.m		Micrometer driver
-
-	*   	@mciDAQ				DAQ input devices
+	
+	* @mciDAQ	DAQ input devices
+	
 		*       mciDAQ.m		Wrapper __[Do not modify!]__
 		*       counterConfig.m		Counter input driver
 		*       digitalConfig.m		[template]
 		*       voltageConfig.m		[template]
+		
+	* @mcaMicro
+		*       mcaMicro.m		Wrapper __[Do not modify!]__
+		*       microConfig.m		Micrometer driver
 
 	* extra					other unused device drivers and configurations
 
