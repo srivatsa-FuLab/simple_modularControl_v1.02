@@ -43,5 +43,13 @@ This a simplified fork of the modularControl code. The goal here is to get your 
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
 
+## How it works
+![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works.png?raw=true)
+
+* The instrument `driver` defines how the physical instrument data (eg. in V) can be converted to digital data and vice versa.
+* The instrument `wrapper` defines how the digital data is converted to a containerized mc_object and vice versa.
+	* For instruments that need to talk via the DAQ, the daq wrapper also takes care of multiple device synchronization (eg. synchronize counter, voltage output to piezos for a 2-D confocal scan)
+* The mc_object contains data and all the information required for user interactivity through the GUI
+
 ## How to configure a new microscope
 WIP
