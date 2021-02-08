@@ -1,5 +1,5 @@
 # `Simple modularControl`
-This a simplified fork of the modularControl code. The goal here is to get your microscope up and running with minimum effort. New instruments can be easily configured and the GUI can be reconfigured as required. By design most of the back-end code is hidden from the end user, yet all the functionality of modularControl is retained.   
+This a streamlined fork of the modularControl code. The goal here is to get your microscope up and running with minimum effort. New instruments can be easily configured and the GUI can be reconfigured as required. By design most of the back-end code is hidden from the end user, yet all the functionality of modularControl is retained.   
 
 ## Package structure:
 
@@ -59,4 +59,24 @@ Here is how the GUI can be described in blocks
 
 
 ## How to configure a new microscope:
+
+To build a custom GUI for your microscope, follow these steps in order
+
+#### 1. Write a driver for your device
+A driver function defines how to convert the commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
+	
+* Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
+* Understand how to talk to these devices. Always check the manual or refer to the example code. Matlab instrument control app or NI-Max is a good place to test instrument control. 
+* Encapsulate device communication into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
+
+#### 2. Write a wrapper for your driver
+A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
+>__Note: If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.__
+
+----
 WIP
+#### 3. Add device mc_object initialization to setupObjects
+
+#### 4. Add instrument elements to the UI (ScopeConfig.m)
+
+#### 5. Define the actions performed by the new UI elements
