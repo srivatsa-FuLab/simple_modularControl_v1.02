@@ -77,9 +77,11 @@ Here is how the GUI can be described in blocks
 
 To build a custom GUI for your microscope, follow these steps in order
 
+<!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**1. Write a driver for your device**_
 &nbsp;
+
 A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
@@ -88,6 +90,7 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
+&nbsp;
 <pre>
 More details on parameters defined within the included drivers:
 
@@ -133,6 +136,7 @@ These parameters are utilized by your wrapper to figure out the hardware communi
 You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
 
 </pre>
+&nbsp;
 
 __Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
 
@@ -141,14 +145,41 @@ __Note:__ The physical hardware uses *internal* units whereas the user uses *ext
 
 Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
+
+<!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**2. Write a wrapper for your driver**_
-A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
+&nbsp;
+
+A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step#1 are inherited as a static method within the wrapper class definition.
 >__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
 
+See below for a outline of a wrapper with a brief description of the methods (this example uses `mcaDAQ.m` which is a wrapper for the DAQ input/output instrument):
+&nbsp;
 
+```matlab
+classdef mcaDAQ < mcAxis 
+% Make sure that the folder name is @class_name. This folder should only contain the specific instrument driver + wrapper
+% There are additional methods inherited from mcAxis that generally do not need to be modified by the user 
 
+    methods (Static)    
+   	% Here you need to register your driver functions defined in step #1
+   	% There are two devices connected to the DAQ
+        mc_object = piezoConfig(); %<- register the piezo driver with the wrapper
+        mc_object = galvoConfig(); %<- register the galvo driver with the wrapper     
+    
+    methods ()  
+        function Open(mc_object)  	%<- Open a communication channel with the DAQ.	
+        function Close(mc_object)	%<- Close the communication channel with the DAQ.
+        function Goto(mc_object, x)     %<- Communicate with the device; send x
+
+        % EXTRA
+	% This is only required for DAQ wrappers
+	% required to synchronize data acquisition between multiple devices connected to the DAQ   
+        function addToSession(mc_object, s)	    
+```
 ----
+
 WIP
 ### 3. Add device mc_object initialization to setupObjects
 
