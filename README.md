@@ -65,7 +65,11 @@ Here is how the default configuration can be described in blocks
 
 Here is how the GUI can be described in blocks
 
-<img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="600" height="400">
+<img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="550" height="400">
+
+* When the GUI is started, `setupObjects.m` is exectued and all the `mc_objects` are initialized (for all connected devices). Communication channels are established and the instruments are set to their default state (defined in their respective drivers).
+* Next, the user facing UI elements defined in `ScopeConfig.m` are executed and the GUI goes into standby-mode awaiting a user interaction event (i.e. a GUI callback).
+* When a UI element is triggered either by a mouse click or keypress event, the callback function for that specific UI elemnt (defined in `Callbacks.m`) is executed. This callback function can be a predefined function such as confocal scan or your very own custom function __(ensure your function is in the matlab path)__.
 
 ---
 &nbsp;
@@ -135,7 +139,7 @@ __Note:__ The physical hardware uses *internal* units whereas the user uses *ext
 	config.kind.int2extConv =   @(x)(5.*(5 - x));
 	config.kind.ext2intConv =   @(x)((25 - x)./5);
 
-It should be noted that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
+Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
 &nbsp;
 ### _**2. Write a wrapper for your driver**_
