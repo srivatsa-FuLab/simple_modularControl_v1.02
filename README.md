@@ -95,7 +95,6 @@ To build a custom GUI for your microscope, follow these steps in order
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**1. Write a driver for your device**_
-&nbsp;
 
 A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
@@ -164,7 +163,6 @@ Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the c
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**2. Write a wrapper for your driver**_
-&nbsp;
 
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step#1 are inherited as a static method within the wrapper class definition.
 >__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
@@ -197,7 +195,6 @@ classdef mcaDAQ < mcAxis
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### 3. GUI configuration 
-&nbsp;
 
 WIP
 
