@@ -3,9 +3,24 @@
 
 This a streamlined fork of the modularControl code. The goal here is to get your microscope up and running with minimum effort. New instruments can be easily configured and the GUI can be reconfigured as required. By design most of the back-end code is hidden from the end user, yet all the functionality of modularControl is retained.   
 
----  
+## Quick Links
+
+- [Package summary](#package-summary)
+- [How it works](#how-it-works) (block diagram)
+- [Configure your microscope](#how-to-configure-your-new-microscope)
+	- [Device driver](1-write-a-driver-for-your-device)
+	- [Instrument Wrapper](2-Write-a-wrapper-for-your-driver)
+	- [User Interface]()
+	- [Custom functionality]()
+- [DAQ functions]()
+- [Video]()
+- [Utilities]()
+
+
+---
 &nbsp;
-## Package structure:
+## Package summary:
+A summary of the structure of this package with brief file descriptors
 
 <pre>
 * mcScope.m		`This is the main function that runs the package`
@@ -178,11 +193,16 @@ classdef mcaDAQ < mcAxis
 	% required to synchronize data acquisition between multiple devices connected to the DAQ   
         function addToSession(mc_object, s)	    
 ```
-----
+
+<!--- ---------------------------------------------------------------------------------------------------------- --->
+&nbsp;
+### 3. GUI configuration 
+&nbsp;
 
 WIP
-### 3. Add device mc_object initialization to setupObjects
 
-### 4. Add instrument elements to the UI (ScopeConfig.m)
+Add device mc_object initialization to setupObjects
 
-### 5. Define the actions performed by the new UI elements
+Add instrument elements to the UI (ScopeConfig.m)
+
+Define the actions performed by the new UI elements
