@@ -63,7 +63,7 @@ Here is how the GUI can be described in blocks
 To build a custom GUI for your microscope, follow these steps in order
 
 #### 1. Write a driver for your device
-A driver function defines how to convert the commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
+A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
 * Understand how to talk to these devices. Always check the manual or refer to the example code. Matlab instrument control app or NI-Max is a good place to test instrument control. 
