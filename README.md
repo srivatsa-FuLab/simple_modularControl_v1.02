@@ -152,12 +152,12 @@ You may have to define new parmaters for your device. See `mcInstruments->extras
 </pre>
 &nbsp;
 
-__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
+>__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
 
 	config.kind.int2extConv =   @(x)(5.*(5 - x));
 	config.kind.ext2intConv =   @(x)((25 - x)./5);
 
-Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
+>Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
