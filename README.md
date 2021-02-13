@@ -1,6 +1,8 @@
 # `Simple modularControl`
 This a streamlined fork of the modularControl code. The goal here is to get your microscope up and running with minimum effort. New instruments can be easily configured and the GUI can be reconfigured as required. By design most of the back-end code is hidden from the end user, yet all the functionality of modularControl is retained.   
 
+
+
 ## Package structure:
 
 <pre>
@@ -42,6 +44,8 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 * user_data		Your data can be organized here
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
+
+
 
 ## How it works:
 
@@ -102,13 +106,15 @@ __Devie specific Parameters__
 These parameters are utilized by your wrapper to figure out the hardware communication channel
 
 * For a DAQ device
-`config.dev` a string that identifies the DAQ. Check NI-MAX for the identifier if you have multiple DAQs (deafult is 'Dev1')
+`config.dev` a string that identifies the DAQ. Check NI-MAX for the identifier 
+	     (deafult is 'Dev1' can vary if you have usbDAQ or multiple DAQs)
 `config.chn` a string that identifies the DAQ channel (eg. for analog output on daq channel-0 use 'ao0')
 `config.type` a string defining the type of DAQ channel (eg. for voltage ouput use 'Voltage')
 
 * For a USB device (eg. newport micrometer)
 `config.port` a string that identifies the USB serial port for the micrometer controller (eg.'COM4')
-`config.addr` a string required by the newport usb controller to account for multiple micrometers connected to a single usb controller (default '1')
+`config.addr` a string required by the newport usb controller in case multiple micrometers
+	      are connected a single usb controller (default '1')
 
 * For a custom device
 You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
@@ -125,6 +131,8 @@ You may have to define new parmaters for your device. See `mcInstruments->extras
 #### 2. Write a wrapper for your driver
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
 >__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
+
+
 
 ----
 WIP
