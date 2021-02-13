@@ -53,7 +53,7 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 ## How it works:
 
 Here is how the default configuration can be described in blocks
-&nbsp;
+
 ![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works.png?raw=true)
 
 * The instrument `driver` defines how the physical instrument data (eg. in V) can be converted to digital data and vice versa.
@@ -62,8 +62,9 @@ Here is how the default configuration can be described in blocks
 * The `mc_object` contains data and all the information required for user interactivity through the GUI (eg. type of input; say x-axis, integration time, etc.)
 
 &nbsp;
+
 Here is how the GUI can be described in blocks
-&nbsp;
+
 <img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="600" height="400">
 
 ---
@@ -129,12 +130,12 @@ You may have to define new parmaters for your device. See `mcInstruments->extras
 
 </pre>
 
->__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
->
->	config.kind.int2extConv =   @(x)(5.*(5 - x));
->	config.kind.ext2intConv =   @(x)((25 - x)./5);
->
->It should be noted that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
+__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
+
+	config.kind.int2extConv =   @(x)(5.*(5 - x));
+	config.kind.ext2intConv =   @(x)((25 - x)./5);
+
+It should be noted that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
 &nbsp;
 ### _**2. Write a wrapper for your driver**_
