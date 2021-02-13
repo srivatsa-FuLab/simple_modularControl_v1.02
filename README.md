@@ -1,8 +1,10 @@
 # `Simple modularControl`
+---
+
 This a streamlined fork of the modularControl code. The goal here is to get your microscope up and running with minimum effort. New instruments can be easily configured and the GUI can be reconfigured as required. By design most of the back-end code is hidden from the end user, yet all the functionality of modularControl is retained.   
 
-
-
+---  
+&nbsp;
 ## Package structure:
 
 <pre>
@@ -46,10 +48,12 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 </pre>
 
 
-
+---
+&nbsp;
 ## How it works:
 
 Here is how the default configuration can be described in blocks
+&nbsp;
 ![alt text](https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works.png?raw=true)
 
 * The instrument `driver` defines how the physical instrument data (eg. in V) can be converted to digital data and vice versa.
@@ -57,16 +61,20 @@ Here is how the default configuration can be described in blocks
 	* For instruments that need to talk via the DAQ, the daq wrapper also takes care of multiple device synchronization (eg. synchronize counter, voltage output to piezos for a 2-D confocal scan)
 * The `mc_object` contains data and all the information required for user interactivity through the GUI (eg. type of input; say x-axis, integration time, etc.)
 
+&nbsp;
 Here is how the GUI can be described in blocks
-
+&nbsp;
 <img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="600" height="400">
 
-
+---
+&nbsp;
 ## How to configure your new microscope:
 
 To build a custom GUI for your microscope, follow these steps in order
 
-#### _**1. Write a driver for your device**_
+&nbsp;
+### _**1. Write a driver for your device**_
+&nbsp;
 A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
@@ -128,7 +136,8 @@ You may have to define new parmaters for your device. See `mcInstruments->extras
 >
 >It should be noted that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
-#### 2. Write a wrapper for your driver
+&nbsp;
+### _**2. Write a wrapper for your driver**_
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
 >__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
 
@@ -136,8 +145,8 @@ A wrapper is a class that utilizes the driver function to perform all communicat
 
 ----
 WIP
-#### 3. Add device mc_object initialization to setupObjects
+### 3. Add device mc_object initialization to setupObjects
 
-#### 4. Add instrument elements to the UI (ScopeConfig.m)
+### 4. Add instrument elements to the UI (ScopeConfig.m)
 
-#### 5. Define the actions performed by the new UI elements
+### 5. Define the actions performed by the new UI elements
