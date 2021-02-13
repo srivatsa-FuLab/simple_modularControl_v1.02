@@ -67,7 +67,9 @@ A driver function defines the translation of commands from the GUI into a form t
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
 * Understand how to talk to these devices. Always check the manual or refer to the example code. Matlab instrument control app or NI-Max is a good place to test instrument control. 
-* Encapsulate device communication into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
+* Encapsulate device communication protocol into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
+
+__The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
 <pre>
 More details on parameters defined within the included drivers:
@@ -77,7 +79,7 @@ __For your reference (it is always a good ideal to keep your code readable!)__
 `config.kind.name`, the explanatory name of the kind (i.e. manufacturer, model number, etc.)
 
 __Common Parameters__
-Device agnostic
+These paramters are device agnostic
 
 * In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]
 `config.kind.intUnits` a string representing the units that the axis uses internally (e.g. for piezos, this is volts)
