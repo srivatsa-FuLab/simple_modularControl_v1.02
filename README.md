@@ -62,11 +62,11 @@ Here is how the GUI can be described in blocks
 <img src="https://github.com/srivatsa-FuLab/simple_modularControl_v1.02/blob/main/how_it_works_gui.png?raw=true" width="600" height="400">
 
 
-## How to configure a new microscope:
+## How to configure your new microscope:
 
 To build a custom GUI for your microscope, follow these steps in order
 
-#### 1. Write a driver for your device
+#### _**1. Write a driver for your device**_
 A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
