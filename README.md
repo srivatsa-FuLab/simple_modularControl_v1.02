@@ -69,6 +69,36 @@ A driver function defines how to convert the commands from the GUI into a form t
 * Understand how to talk to these devices. Always check the manual or refer to the example code. Matlab instrument control app or NI-Max is a good place to test instrument control. 
 * Encapsulate device communication into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
 
+
+More details on parameters defined within the included drivers (inherited from ModularControl)
+	##### For your reference (it is always a good ideal to keep your code readable!)
+	* `config.kind.kind`, the programatic name of the kind (i.e. type of interface, physical device identifier, etc.).
+	* `config.kind.name`, the explanatory name of the kind (i.e. manufacturer, model number, etc.).
+
+	##### In a `mcAxis` type driver [i.e for bi-directional communication; Input and Output thru DAQ]:
+	* `config.kind.intUnits`, a string representing the units that the axis uses internally (e.g. for piezos, this is volts).
+	* `config.kind.extUnits`, a string representing the units that the user should use (e.g. for piezos, this is microns).
+	* `config.kind.int2extConv`, conversion from internal to external units (e.g. for piezos, 0V maps to -25um, 10V maps to 25um).
+	* `config.kind.ext2intConv`, conversion from external to internal units, this should be the inverse of `int2extConv`, but is currently not error checked (check randomly in the future?).
+	* `config.kind.intRange`, the range of the axis in external units (this is generated using the conversions).
+	* `config.kind.extRange`, the range of the axis in external units (this is generated from `intRange` using the conversions).
+	* `config.kind.base`,	the value (in internal units) that the axis should seek at startup.
+
+	##### In a `mcInput` type driver [i.e. for Input only; eg. counter input through DAQ]
+	* `config.kind.extUnits`, the appropriate units (no internal units are neccessary here).
+	* `config.kind.shouldNormalize`, whether or not the measurement should be divided by the time taken to measure (e.g. where absolute counts are meaningless unless the time taken to collect is present; this is currently only used with `mciDAQ` devices).
+	* `config.kind.sizeInput`, the expected size of the input (this allows other parts of the program to allocate space for the `mcInput` before the measurement has been taken; for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
+
+	It is meant to unify mcInstruments of similar, but not identical identity. For instance, all MadCity Labs piezos have the same `config.kind` because they all have the same range and convert between units with the same conversions. The only difference is the special variables (`dev` and `chn` in this case).
+
+	>__A Note About Internal vs External Units...__
+	>The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
+	>
+	>	config.kind.int2extConv =   @(x)(5.*(5 - x));
+	>	config.kind.ext2intConv =   @(x)((25 - x)./5);
+	>
+	>It should be noted that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
+
 #### 2. Write a wrapper for your driver
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
 >__Note: If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.__
