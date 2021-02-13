@@ -70,13 +70,16 @@ A driver function defines the translation of commands from the GUI into a form t
 * Encapsulate device communication into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
 
 <pre>
-More details on parameters defined within the included drivers (inherited from ModularControl)
+More details on parameters defined within the included drivers:
 
-For your reference (it is always a good ideal to keep your code readable!)
-* `config.kind.kind`, the programatic name of the kind (i.e. type of interface, physical device identifier, etc.)
-* `config.kind.name`, the explanatory name of the kind (i.e. manufacturer, model number, etc.)
+__For your reference (it is always a good ideal to keep your code readable!)__
+`config.kind.kind`, the programatic name of the kind (i.e. type of interface, physical device identifier, etc.)
+`config.kind.name`, the explanatory name of the kind (i.e. manufacturer, model number, etc.)
 
-In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]:
+__Common Parameters__
+Device agnostic
+
+* In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]
 `config.kind.intUnits` a string representing the units that the axis uses internally (e.g. for piezos, this is volts)
 `config.kind.extUnits` a string representing the units that the user should use (e.g. for piezos, this is microns)
 `config.kind.int2extConv` conversion from internal to external units (e.g. for piezos, 0V maps to -25um, 10V maps to 25um)
@@ -85,17 +88,32 @@ In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Outp
 `config.kind.extRange` the range of the axis in external units (this is generated from `intRange` using the conversions)
 `config.kind.base` the value (in internal units) that the axis should seek at startup
 
-In a `mcInput` type driver [i.e. for Input only; eg. counter input through DAQ]
+* In a `mcInput` type driver [i.e. for Input only; eg. counter input through DAQ]
 `config.kind.extUnits` the appropriate units (no internal units are neccessary here)
 `config.kind.shouldNormalize` whether or not the measurement should be divided by the time taken to measure 
 	(e.g. where absolute counts are meaningless unless the time taken to collect is present)
 `config.kind.sizeInput` the expected size of the input
 	(this allows other parts of the program to allocate space for the `mcInput` before the measurement has been
 	 taken for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
+	 
+__Devie specific Parameters__
+These parameters are utilized by your wrapper to figure out the hardware communication channel
+
+* For a DAQ device
+`config.dev` a string that identifies the DAQ. Check NI-MAX for the identifier if you have multiple DAQs (deafult is 'Dev1')
+`config.chn` a string that identifies the DAQ channel (eg. for analog output on daq channel-0 use 'ao0')
+`config.type` a string defining the type of DAQ channel (eg. for voltage ouput use 'Voltage')
+
+* For a USB device (eg. newport micrometer)
+`config.port` a string that identifies the USB serial port for the micrometer controller (eg.'COM4')
+`config.addr` a string required by the newport usb controller to account for multiple micrometers connected to a single usb controller (default '1')
+
+* For a custom device
+You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
+
 </pre>
 
-__A Note About Internal vs External Units...__
->The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
+>__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
 >
 >	config.kind.int2extConv =   @(x)(5.*(5 - x));
 >	config.kind.ext2intConv =   @(x)((25 - x)./5);
@@ -104,7 +122,7 @@ __A Note About Internal vs External Units...__
 
 #### 2. Write a wrapper for your driver
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step-(1) are inherited as a static method within the wrapper class definition.
->__Note: If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.__
+>__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
 
 ----
 WIP
