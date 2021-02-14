@@ -33,34 +33,32 @@ A summary of the structure of this package with brief folder and file descriptor
 	*       setupObjects.m			Ensure the GUI can interface with the instruments
 
 * mcInstruments
-	* @mcaDAQ	DAQ output devices
-	
-		*       mcaDAQ.m		Wrapper __[Do not modify!]__
+	* @mcaDAQ	DAQ output devices	
+		*	mcaDAQ.m		Wrapper __[Do not modify!]__
 		*       piezoConfig.m		Piezo driver
 		*       galvoConfig.m		Galvo driver
 		*       analogConfig.m 		[template]
 		*       digitalConfig.m		[template]	
 	
 	* @mciDAQ	DAQ input devices
-	
 		*       mciDAQ.m		Wrapper __[Do not modify!]__
 		*       counterConfig.m		Counter input driver
 		*       digitalConfig.m		[template]
 		*       voltageConfig.m		[template]
 	
-	* @mcaMicro
+	* @mcaMicro				Newport micrometer
 		*       mcaMicro.m		Wrapper __[Do not modify!]__
 		*       microConfig.m		Micrometer driver	
 		
-	* @mciNIGPIB	GPIB power meter 	[unused device]
+	* @mciNIGPIB				GPIB power meter 	[unused device]
 		*       mciNIGPIB.m		Wrapper 
 		*       powermeterConfig.m	power meter driver
 	
-	* @mciSpectrum	Python spectrometer 	[unused device]
+	* @mciSpectrum				Python spectrometer 	[unused device]
 		*       mciSpectrum.m		Wrapper 
-		*       pyWinSpecConfig.m	Python based spectrometer driver
+		*       pyWinSpecConfig.m	spectrometer driver
 		
-	* @mciPFlip	Virtual instrument	[unused device]
+	* @mciPFlip				Virtual instrument	[unused device]
 		*       mciPFlip.m		Virtual Wrapper 
 		*       pflipConfig.m		Virtual driver
 		
