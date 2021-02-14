@@ -10,8 +10,8 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 - [Configure your microscope](#how-to-configure-your-new-microscope)
 	- [Device driver](#1-write-a-driver-for-your-device)
 	- [Instrument Wrapper](#2-Write-a-wrapper-for-your-driver)
-	- [User Interface]()
-	- [Custom functionality]()
+	- [Initialization](#3-instrument-initialization)
+	- [User Interface](#4-user-interface)
 - [DAQ functions]()
 - [Video]()
 - [Utilities]()
@@ -184,13 +184,21 @@ classdef mcaDAQ < mcAxis
         function addToSession(mc_object, s)	    
 ```
 
+__*WIP*__
+
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>3. User interface</ins>**_ 
+### _**<ins>3. Initialization</ins>**_ 
 
-WIP
+Configure all the devices in `core->mcUserInput.m`. Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port) 
+Add device mc_object initialization to `setupObjects.m`. This utilizes all the devices and parameters defined in `mcUserInput,m`.
 
-Add device mc_object initialization to setupObjects
+<!--- ---------------------------------------------------------------------------------------------------------- --->
+&nbsp;
+### _**<ins>4. User interface</ins>**_ 
+
+
+
 
 Add instrument elements to the UI (ScopeConfig.m)
 
