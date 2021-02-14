@@ -209,7 +209,9 @@ function config = pflipConfig()
 
 	config.kind.kind    	=       'mciPFlip';
 	config.kind.name    	=       'Interjecting Powermeter';
-	config.kind.extUnits 	=       config.power.config.kind.extUnits;  %<- you can inherit properties from other instruments 
+	
+	% you can inherit properties from other instruments
+	config.kind.extUnits 	=       config.power.config.kind.extUnits;   
 end
 ```
 
@@ -245,9 +247,10 @@ classdef mciPFlip < mcInput
         end
 end
 ```
-
+&nbsp;
 >__Note:__ You can perform the operation described above with a simple custom function. However a virtual instrument can be much more complex. Look at `mcInstruments->@mciPLE` that combines a DAQ counter input, DAQ analog out (voltage for laser wavelength control), 2x DAQ digital out (laser shutter and servo ND filters). With the virtual instrument, additional methods can be integrated for plotting, processing and analyzing the acquired PLE data.
 
+&nbsp;
 Keep in mind that there are no limitiation on creating new virtual instruments from combination of other virtual instruments! Additionally, in case of any changes to the physical hardware connections, all that needs to be updated are the protocol definitions in the base driver files :)
 
 
