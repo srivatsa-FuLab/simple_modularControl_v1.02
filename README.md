@@ -127,7 +127,7 @@ These paramters are device agnostic
 `config.kind.shouldNormalize` whether or not the measurement should be divided by the time taken to measure\
 `config.kind.sizeInput` the expected size of the input (this allows other parts of the program to allocate space for the `mcInput` before the measurement has been taken for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
 	 
-_Devie specific Parameters_\
+_Device specific Parameters_\
 These parameters are utilized by your wrapper to figure out the hardware communication channel
 
 * For a DAQ device\
@@ -190,16 +190,13 @@ __*WIP*__
 &nbsp;
 ### _**<ins>3. Initialization</ins>**_ 
 
-Configure all the devices in `core->mcUserInput.m`. Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port) 
-Add device mc_object initialization to `setupObjects.m`. This utilizes all the devices and parameters defined in `mcUserInput,m`.
+Configure all the devices in `core->mcUserInput.m`.\
+Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port)\ 
+Add device mc_object initialization to `setupObjects.m`. This utilizes all the devices and parameters defined in `mcUserInput.m`.
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**<ins>4. User interface</ins>**_ 
 
-
-
-
-Add instrument elements to the UI (ScopeConfig.m)
-
-Define the actions performed by the new UI elements
+Add instrument elements to the UI in `ScopeConfig.m`.\
+Define the actions performed by the new UI elements in `Callbacks.m`
