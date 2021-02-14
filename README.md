@@ -9,9 +9,10 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 - [How it works](#how-it-works)
 - [Configure your microscope](#how-to-configure-your-new-microscope)
 	- [Device driver](#1-write-a-driver-for-your-device)
-	- [Instrument Wrapper](#2-Write-a-wrapper-for-your-driver)
-	- [Initialization](#3-instrument-initialization)
-	- [User Interface](#4-user-interface)
+	- [Instrument Wrapper](#2-write-a-wrapper-for-your-driver)
+	- [Virtual Instruments](#3-virtual-instruments)
+	- [Initialization](#4-instrument-initialization)
+	- [User Interface](#5-user-interface)
 - [DAQ functions]()
 - [Video]()
 - [Utilities]()
@@ -100,7 +101,7 @@ A driver function defines the translation of commands from the GUI into a form t
 	
 * Figure out what devices are connected to your microscope (eg. Piezos, Galvos, spectrometer, etc.).
 * Understand how to talk to these devices. Always check the manual or refer to the example code. Matlab instrument control app or NI-Max is a good place to test instrument control. 
-* Encapsulate device communication protocol into a driver function (there are templates and some less commonly used device drivers under `mcInstruments->extras`).
+* Encapsulate device communication protocol into a driver function (there are templates under `mcInstruments->extras`).
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
@@ -140,7 +141,7 @@ These parameters are utilized by your wrapper to figure out the hardware communi
 `config.addr` a string required by the newport usb controller in case multiple micrometers are connected a single usb controller (default '1')
 
 * For a custom device\
-You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
+You may have to define new parmaters for your device.
 
 &nbsp;
 
@@ -181,14 +182,80 @@ classdef mcaDAQ < mcAxis
         % EXTRA
 	% This is only required for DAQ wrappers
 	% required to synchronize data acquisition between multiple devices connected to the DAQ   
-        function addToSession(mc_object, s)	    
+        function addToSession(mc_object, s)	 
+end
 ```
+
+<!--- ---------------------------------------------------------------------------------------------------------- --->
+&nbsp;
+### _**<ins>3. Virtual Instruments</ins>**_ 
+
+Some experiments require orchestration of multiple devices. In such cases you can define virtual drivers and wrappers that can encapsulate an instance of the real devices, with the experiment details being stored in a single mc_object. For example, if you need to actuate a servo controlled flip-mirror communicating via the DAQ digitalOutput and simultaneously readout the laser power from a GPIB power meter device. The individual drivers and wrappers for the flip-mirror and powermeter can be combined into a `mciPFlip` virtual instrument. Such an example is included in `mcInstruments` and is outlined below.
+
+Outline of the pflipconfig virtual driver:
+``` matlab
+function config = pflipConfig()
+	config.class = 'mciPFlip';	
+	config.name = 'Powermeter';
+	
+	% using an instance of the predefined wrapper + driver for NI-GPIB instrument
+	config.power		= 	mciNIGPIB(); 
+	
+	% using an instance of the predefined wrapper + driver for NI-DAQ instrument
+	flipConfig 		=       mcaDAQ.digitalConfig();
+	flipConfig.chn 		= 	'Port0/Line1'; 
+	flipConfig.name 	= 	'Flip Mirror'; 	
+	config.flip		=       mcaDAQ(flipConfig);
+
+	config.kind.kind    	=       'mciPFlip';
+	config.kind.name    	=       'Interjecting Powermeter';
+	config.kind.extUnits 	=       config.power.config.kind.extUnits;  %<- you can inherit properties from other instruments 
+end
+```
+
+
+Outline of the mcPFlip virtual wrapper:
+``` matlab
+classdef mciPFlip < mcInput
+    methods (Static)         
+        config = pflipConfig();		
+    end
+    
+    methods
+        % OPEN/CLOSE
+        function Open(mc_object)
+            mc_object.config.power.open();
+            mc_object.config.flip.open();
+        end
+	
+        function Close(mc_object)
+            mc_object.config.power.close();
+            mc_object.config.flip.close();
+        end
+        
+        % MEASURE
+        function data = Measure(mc_object, ~)
+            prevX = mc_object.config.flip.getX();       % Get the previous state of the flip mirror.
+            
+            mc_object.config.flip.goto(0);      	% Flip the mirror in...
+            pause(.5);                         		% Wait a bit...
+            data = mc_object.config.power.measure();    % And measure.
+            
+            mc_object.config.flip.goto(prevX);          % Then restore the previous state.
+        end
+end
+```
+
+>__Note:__ You can perform the operation described above with a simple custom function. However a virtual instrument can be much more complex. Look at `mcInstruments->@mciPLE` that combines a DAQ counter input, DAQ analog out (voltage for laser wavelength control), 2x DAQ digital out (laser shutter and servo ND filters). With the virtual instrument, additional methods can be integrated for plotting, processing and analyzing the acquired PLE data.
+
+Keep in mind that there are no limitiation on creating new virtual instruments from combination of other virtual instruments! Additionally, in case of any changes to the physical hardware connections, all that needs to be updated are the protocol definitions in the base driver files :)
+
 
 __*WIP*__
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>3. Initialization</ins>**_ 
+### _**<ins>4. Initialization</ins>**_ 
 
 Configure all the devices in `core->mcUserInput.m`.\
 Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port)\ 
@@ -196,7 +263,7 @@ Add device mc_object initialization to `setupObjects.m`. This utilizes all the d
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>4. User interface</ins>**_ 
+### _**<ins>5. User interface</ins>**_ 
 
 Add instrument elements to the UI in `ScopeConfig.m`.\
 Define the actions performed by the new UI elements in `Callbacks.m`
