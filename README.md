@@ -6,7 +6,7 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 ## Quick Links
 
 - [Package summary](#package-summary)
-- [How it works](#how-it-works) (block diagram)
+- [How it works](#how-it-works)
 - [Configure your microscope](#how-to-configure-your-new-microscope)
 	- [Device driver](#1-write-a-driver-for-your-device)
 	- [Instrument Wrapper](#2-Write-a-wrapper-for-your-driver)
@@ -105,7 +105,7 @@ A driver function defines the translation of commands from the GUI into a form t
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
 &nbsp;
-<pre>
+``` 
 More details on parameters defined within the included drivers:
 
 __For your reference (it is always a good ideal to keep your code readable!)__
@@ -149,7 +149,7 @@ These parameters are utilized by your wrapper to figure out the hardware communi
 * For a custom device
 You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
 
-</pre>
+```
 &nbsp;
 
 >__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
