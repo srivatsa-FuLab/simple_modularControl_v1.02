@@ -105,57 +105,51 @@ A driver function defines the translation of commands from the GUI into a form t
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
 &nbsp;
-``` 
-More details on parameters defined within the included drivers:
 
-__For your reference (it is always a good ideal to keep your code readable!)__
-`config.kind.kind`, the programatic name of the kind (i.e. type of interface, physical device identifier, etc.)
-`config.kind.name`, the explanatory name of the kind (i.e. manufacturer, model number, etc.)
+**<ins>More details on parameters defined within the included drivers:</ins>**
 
-__Common Parameters__
+__For your reference (it is always a good ideal to keep your code readable!)__\
+`config.kind.kind` the programatic name of the device (i.e. type of interface, physical device identifier, etc.)\
+`config.kind.name` the explanatory name of the device (i.e. manufacturer, model number, etc.)
+
+__Common Parameters__\
 These paramters are device agnostic
 
-* In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]
-`config.kind.intUnits` a string representing the units that the axis uses internally (e.g. for piezos, this is volts)
-`config.kind.extUnits` a string representing the units that the user should use (e.g. for piezos, this is microns)
-`config.kind.int2extConv` conversion from internal to external units (e.g. for piezos, 0V maps to -25um, 10V maps to 25um)
-`config.kind.ext2intConv` conversion from external to internal units, this should be the inverse of `int2extConv'
-`config.kind.intRange` the range of the axis in external units (this is generated using the conversions)
-`config.kind.extRange` the range of the axis in external units (this is generated from `intRange` using the conversions)
+* In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]\
+`config.kind.intUnits` a string representing the units that the axis uses internally (e.g. for piezos, this is volts)\
+`config.kind.extUnits` a string representing the units that the user should use (e.g. for piezos, this is microns)\
+`config.kind.int2extConv` conversion from internal to external units (e.g. for piezos, 0V maps to -25um, 10V maps to 25um)\
+`config.kind.ext2intConv` conversion from external to internal units, this should be the inverse of `int2extConv`\
+`config.kind.intRange` the range of the axis in external units (this is generated using the conversions)\
+`config.kind.extRange` the range of the axis in external units (this is generated from `intRange` using the conversions)\
 `config.kind.base` the value (in internal units) that the axis should seek at startup
 
-* In a `mcInput` type driver [i.e. for Input only; eg. counter input through DAQ]
-`config.kind.extUnits` the appropriate units (no internal units are neccessary here)
-`config.kind.shouldNormalize` whether or not the measurement should be divided by the time taken to measure 
-	(e.g. where absolute counts are meaningless unless the time taken to collect is present)
-`config.kind.sizeInput` the expected size of the input
-	(this allows other parts of the program to allocate space for the `mcInput` before the measurement has been
-	 taken for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
+* In a `mcInput` type driver [i.e. for Input only; eg. counter input through DAQ]\
+`config.kind.extUnits` the appropriate units (no internal units are neccessary here)\
+`config.kind.shouldNormalize` whether or not the measurement should be divided by the time taken to measure\ 
+`config.kind.sizeInput` the expected size of the input (this allows other parts of the program to allocate space for the `mcInput` before the measurement has been taken for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
 	 
-__Devie specific Parameters__
+__Devie specific Parameters__\
 These parameters are utilized by your wrapper to figure out the hardware communication channel
 
-* For a DAQ device
-`config.dev` a string that identifies the DAQ. Check NI-MAX for the identifier 
-	     (deafult is 'Dev1' can vary if you have usbDAQ or multiple DAQs)
-`config.chn` a string that identifies the DAQ channel (eg. for analog output on daq channel-0 use 'ao0')
+* For a DAQ device\
+`config.dev` a string that identifies the DAQ. Check NI-MAX for the identifier (deafult is 'Dev1' can vary if you have usbDAQ or multiple DAQs)\
+`config.chn` a string that identifies the DAQ channel (eg. for analog output on daq channel-0 use 'ao0')\
 `config.type` a string defining the type of DAQ channel (eg. for voltage ouput use 'Voltage')
 
-* For a USB device (eg. newport micrometer)
-`config.port` a string that identifies the USB serial port for the micrometer controller (eg.'COM4')
-`config.addr` a string required by the newport usb controller in case multiple micrometers
-	      are connected a single usb controller (default '1')
+* For a USB device (eg. newport micrometer)\
+`config.port` a string that identifies the USB serial port for the micrometer controller (eg.'COM4')\
+`config.addr` a string required by the newport usb controller in case multiple micrometers are connected a single usb controller (default '1')
 
-* For a custom device
+* For a custom device\
 You may have to define new parmaters for your device. See `mcInstruments->extras` for ideas.
 
-```
 &nbsp;
 
 >__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
 
-	config.kind.int2extConv =   @(x)(5.*(5 - x));
-	config.kind.ext2intConv =   @(x)((25 - x)./5);
+>	config.kind.int2extConv =   @(x)(5.*(5 - x));\
+>	config.kind.ext2intConv =   @(x)((25 - x)./5);
 
 >Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
