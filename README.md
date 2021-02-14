@@ -104,13 +104,13 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
-**<ins>More details on parameters defined within the included drivers:</ins>**
+ **<ins>More details on parameters defined within the included drivers:</ins>**
 
-__For your reference (it is always a good ideal to keep your code readable!)__\
+_For your reference (it is always a good ideal to keep your code readable!)_\
 `config.kind.kind` the programatic name of the device (i.e. type of interface, physical device identifier, etc.)\
 `config.kind.name` the explanatory name of the device (i.e. manufacturer, model number, etc.)
 
-__Common Parameters__\
+_Common Parameters_\
 These paramters are device agnostic
 
 * In a `mcAxis` type driver [i.e. for bi-directional communication; Input and Output thru DAQ]\
@@ -127,7 +127,7 @@ These paramters are device agnostic
 `config.kind.shouldNormalize` whether or not the measurement should be divided by the time taken to measure\
 `config.kind.sizeInput` the expected size of the input (this allows other parts of the program to allocate space for the `mcInput` before the measurement has been taken for numbers, this is set to `[1 1]`; for a vector like a spectrum, this could be [512 1]).
 	 
-__Devie specific Parameters__\
+_Devie specific Parameters_\
 These parameters are utilized by your wrapper to figure out the hardware communication channel
 
 * For a DAQ device\
