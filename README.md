@@ -47,12 +47,24 @@ A summary of the structure of this package with brief folder and file descriptor
 		*       counterConfig.m		Counter input driver
 		*       digitalConfig.m		[template]
 		*       voltageConfig.m		[template]
-		
+	
 	* @mcaMicro
 		*       mcaMicro.m		Wrapper __[Do not modify!]__
-		*       microConfig.m		Micrometer driver
-
-	* extra					other unused device drivers and configurations
+		*       microConfig.m		Micrometer driver	
+		
+	* @mciNIGPIB	GPIB power meter 	[unused device]
+		*       mciNIGPIB.m		Wrapper 
+		*       powermeterConfig.m	power meter driver
+	
+	* @mciSpectrum	Python spectrometer 	[unused device]
+		*       mciSpectrum.m		Wrapper 
+		*       pyWinSpecConfig.m	Python based spectrometer driver
+		
+	* @mciPFlip	Virtual instrument	[unused device]
+		*       mciPFlip.m		Virtual Wrapper 
+		*       pflipConfig.m		Virtual driver
+		
+	* extra		other unused device drivers and templates
 
 
 * configs		During runtime, a GUI configuration is created and stored in this folder
