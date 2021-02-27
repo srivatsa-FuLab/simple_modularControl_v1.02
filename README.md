@@ -73,7 +73,7 @@ A summary of the structure of this package with brief folder and file descriptor
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
 
-[Back to the top](#quick-links)
+[Back to the top](#simple-modularcontrol)
 
 ---
 &nbsp;
@@ -98,7 +98,7 @@ Here is how the GUI can be described in blocks
 * Next, the user facing UI elements defined in `ScopeConfig.m` are executed and the GUI goes into standby-mode awaiting a user interaction event (i.e. a GUI callback).
 * When a UI element is triggered either by a mouse click or keypress event, the callback function for that specific UI elemnt (defined in `Callbacks.m`) is executed. This callback function can be a predefined function such as confocal scan or your very own custom function __(ensure your function is in the matlab path)__.
 
-[Back to the top](#quick-links)
+[Back to the top](#simple-modularcontrol)
 
 ---
 &nbsp;
@@ -165,7 +165,7 @@ You may have to define new parmaters for your device.
 >
 >Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
-[Back to the top](#quick-links)
+[Back to the top](#simple-modularcontrol)
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
@@ -199,7 +199,7 @@ classdef mcaDAQ < mcAxis
         function addToSession(mc_object, s)	 
 end
 ```
-[Back to the top](#quick-links)
+[Back to the top](#simple-modularcontrol)
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
@@ -269,7 +269,7 @@ end
 
 Keep in mind that there are no limitiation on creating new virtual instruments from combination of other virtual instruments! Additionally, in case of any changes to the physical hardware connections, all that needs to be updated are the protocol definitions in the base driver files :)
 
-[Back to the top](#quick-links)
+[Back to the top](#simple-modularcontrol)
 
 __*WIP*__
 
@@ -281,9 +281,13 @@ Configure all the devices in `core->mcUserInput.m`.\
 Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port)\ 
 Add device mc_object initialization to `setupObjects.m`. This utilizes all the devices and parameters defined in `mcUserInput.m`.
 
+[Back to the top](#simple-modularcontrol)
+
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**<ins>5. User interface</ins>**_ 
 
 Add instrument elements to the UI in `ScopeConfig.m`.\
 Define the actions performed by the new UI elements in `Callbacks.m`
+
+[Back to the top](#simple-modularcontrol)
