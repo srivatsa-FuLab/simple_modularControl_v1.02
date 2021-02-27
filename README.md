@@ -73,6 +73,7 @@ A summary of the structure of this package with brief folder and file descriptor
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
 
+[Back to the top](#quick-links)
 
 ---
 &nbsp;
@@ -96,6 +97,8 @@ Here is how the GUI can be described in blocks
 * When the GUI is started, `setupObjects.m` is exectued and all the `mc_objects` are initialized (for all connected devices). Communication channels are established and the instruments are set to their default state (defined in their respective drivers).
 * Next, the user facing UI elements defined in `ScopeConfig.m` are executed and the GUI goes into standby-mode awaiting a user interaction event (i.e. a GUI callback).
 * When a UI element is triggered either by a mouse click or keypress event, the callback function for that specific UI elemnt (defined in `Callbacks.m`) is executed. This callback function can be a predefined function such as confocal scan or your very own custom function __(ensure your function is in the matlab path)__.
+
+[Back to the top](#quick-links)
 
 ---
 &nbsp;
@@ -162,6 +165,7 @@ You may have to define new parmaters for your device.
 >
 >Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
 
+[Back to the top](#quick-links)
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
@@ -195,6 +199,7 @@ classdef mcaDAQ < mcAxis
         function addToSession(mc_object, s)	 
 end
 ```
+[Back to the top](#quick-links)
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
@@ -264,6 +269,7 @@ end
 
 Keep in mind that there are no limitiation on creating new virtual instruments from combination of other virtual instruments! Additionally, in case of any changes to the physical hardware connections, all that needs to be updated are the protocol definitions in the base driver files :)
 
+[Back to the top](#quick-links)
 
 __*WIP*__
 
