@@ -118,6 +118,36 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
+See below for a outline of a driver with a brief description of the parameters (this example uses `piezoConfig.m` which is a driver for piezo control through the DAQ input/output instrument):
+&nbsp;
+
+```matlab
+%Piezo-systems Jena Nanopositioner
+%Currently installed on the NV microscope
+
+function config = piezoConfig()
+    config.class =              'mcaDAQ';
+
+    config.name =               'Default Piezo';
+
+    config.kind.kind =          'NIDAQanalog'; 		  % Actual hardware interface
+    config.kind.name =          'PiezosystemsJena Piezo'; % For user info. only
+    config.kind.intRange =      [0 10];			  % Output voltage range
+    config.kind.int2extConv =   @(x)(8.*(5 - x));         % Conversion from 'internal' units to 'external'.
+    config.kind.ext2intConv =   @(x)((40 - x)./8);        % Conversion from 'external' units to 'internal'.
+    config.kind.intUnits =      'V';                      % 'Internal' units.
+    config.kind.extUnits =      'um';                     % 'External' units.
+    config.kind.base =           5;                       % The (internal) value that the axis seeks at startup.
+
+    config.dev =                'Dev1';			  % DAQ hardware address
+    config.chn =                'ao0';			  % DAQ analog output channel
+    config.type =               'Voltage';		  % DAQ output type 
+
+    config.keyStep =            .1;			  % Default step size 
+    config.joyStep =            .5;			  % Default step size (if joystick exists) 	
+end
+```
+
 &nbsp;
 
 __More details on parameters defined within the included drivers:__
@@ -214,8 +244,9 @@ end
 
 Some experiments require orchestration of multiple devices. In such cases you can define virtual drivers and wrappers that can encapsulate an instance of the real devices, with the experiment details being stored in a single mc_object. For example, if you need to actuate a servo controlled flip-mirror communicating via the DAQ digitalOutput and simultaneously readout the laser power from a GPIB power meter device. The individual drivers and wrappers for the flip-mirror and powermeter can be combined into a `mciPFlip` virtual instrument.
 
-Such an example is included in `mcInstruments` and is outlined below.
+&nbsp;
 
+__Such an example is included in `mcInstruments` and is outlined below:__
 <details>
 <summary> Show all details </summary>
 
