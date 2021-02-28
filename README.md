@@ -11,7 +11,7 @@ This a streamlined fork of the modularControl code. The goal here is to get your
 	- [Device driver](#1-write-a-driver-for-your-device)
 	- [Instrument Wrapper](#2-write-a-wrapper-for-your-driver)
 	- [Virtual Instruments](#3-virtual-instruments)
-	- [Initialization](#4-instrument-initialization)
+	- [Initialization](#4-initialization)
 	- [User Interface](#5-user-interface)
 - [DAQ functions]()
 - [Video]()
