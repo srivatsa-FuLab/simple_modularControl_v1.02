@@ -118,7 +118,9 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
-_**More details on parameters defined within the included drivers:**_
+&nbsp;
+
+__More details on parameters defined within the included drivers:__
 <details>
 <summary> Show all details </summary>
 
@@ -166,7 +168,6 @@ You may have to define new parmaters for your device.
 >	config.kind.ext2intConv =   @(x)((25 - x)./5);
 >
 >Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
-
 
 </p>
 </details>  
