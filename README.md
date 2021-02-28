@@ -118,7 +118,9 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
- **<ins>More details on parameters defined within the included drivers:</ins>**
+<details>
+<summary>More details on parameters defined within the included drivers:</summary>
+<p>
 
 _For your reference (it is always a good ideal to keep your code readable!)_\
 `config.kind.kind` the programatic name of the device (i.e. type of interface, physical device identifier, etc.)\
@@ -155,6 +157,8 @@ These parameters are utilized by your wrapper to figure out the hardware communi
 
 * For a custom device\
 You may have to define new parmaters for your device.
+</p>
+</details>  
 
 &nbsp;
 
