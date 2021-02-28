@@ -209,10 +209,12 @@ You may have to define new parmaters for your device.
 ### __<ins>2. Write a wrapper for your driver</ins>__
 
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step#1 are inherited as a static method within the wrapper class definition.
->__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
+
+>__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper.
+
+&nbsp;
 
 See below for a outline of a wrapper with a brief description of the methods (this example uses `mcaDAQ.m` which is a wrapper for the DAQ input/output instrument):
-&nbsp;
 
 ```matlab
 classdef mcaDAQ < mcAxis 
