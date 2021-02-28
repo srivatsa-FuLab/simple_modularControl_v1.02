@@ -118,8 +118,10 @@ A driver function defines the translation of commands from the GUI into a form t
 
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
+_**More details on parameters defined within the included drivers:**_
 <details>
-<summary>**<ins>More details on parameters defined within the included drivers:</ins>**</summary>
+<summary> Show all details </summary>
+
 <p>
 
 _For your reference (it is always a good ideal to keep your code readable!)_\
@@ -157,10 +159,6 @@ These parameters are utilized by your wrapper to figure out the hardware communi
 
 * For a custom device\
 You may have to define new parmaters for your device.
-</p>
-</details>  
-
-&nbsp;
 
 >__Note:__ The physical hardware uses *internal* units whereas the user uses *external* units. For instance, a piezo uses Volts *internally* but microns *externally*. The *external* units are defined via the anonymous function `config.kind.int2extConv` and its inverse `config.kind.ext2intConv`. For instance, for the piezos that we use in the diamond room, we convert between a 0 to 10 V range and a -25 to 25 um range. Thus,
 >
@@ -168,6 +166,10 @@ You may have to define new parmaters for your device.
 >	config.kind.ext2intConv =   @(x)((25 - x)./5);
 >
 >Keep in mind that the *internal* `mcObject` variables `a.x` and `a.xt` --- the current and target positions --- use *internal* units. The *external* current and target positions can be found via `a.getX()` and `a.getXt()`.
+
+
+</p>
+</details>  
 
 [Back to the top](#simple-modularcontrol)
 
