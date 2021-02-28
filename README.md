@@ -125,7 +125,7 @@ __More details on parameters defined within the included drivers:__
 <summary> Show all details </summary>
 
 <p>
-
+	
 _For your reference (it is always a good ideal to keep your code readable!)_\
 `config.kind.kind` the programatic name of the device (i.e. type of interface, physical device identifier, etc.)\
 `config.kind.name` the explanatory name of the device (i.e. manufacturer, model number, etc.)
@@ -212,7 +212,12 @@ end
 &nbsp;
 ### _**<ins>3. Virtual Instruments</ins>**_ 
 
-Some experiments require orchestration of multiple devices. In such cases you can define virtual drivers and wrappers that can encapsulate an instance of the real devices, with the experiment details being stored in a single mc_object. For example, if you need to actuate a servo controlled flip-mirror communicating via the DAQ digitalOutput and simultaneously readout the laser power from a GPIB power meter device. The individual drivers and wrappers for the flip-mirror and powermeter can be combined into a `mciPFlip` virtual instrument. Such an example is included in `mcInstruments` and is outlined below.
+Some experiments require orchestration of multiple devices. In such cases you can define virtual drivers and wrappers that can encapsulate an instance of the real devices, with the experiment details being stored in a single mc_object. For example, if you need to actuate a servo controlled flip-mirror communicating via the DAQ digitalOutput and simultaneously readout the laser power from a GPIB power meter device. The individual drivers and wrappers for the flip-mirror and powermeter can be combined into a `mciPFlip` virtual instrument.
+
+Such an example is included in `mcInstruments` and is outlined below.
+
+<details>
+<summary> Show all details </summary>
 
 Outline of the pflipconfig virtual driver:
 ``` matlab
@@ -269,8 +274,11 @@ classdef mciPFlip < mcInput
         end
 end
 ```
+
 &nbsp;
 >__Note:__ You can perform the operation described above with a simple custom function. However a virtual instrument can be much more complex. Look at `mcInstruments->@mciPLE` that combines a DAQ counter input, DAQ analog out (voltage for laser wavelength control), 2x DAQ digital out (laser shutter and servo ND filters). With the virtual instrument, additional methods can be integrated for plotting, processing and analyzing the acquired PLE data.
+
+</details> 
 
 &nbsp;
 
@@ -278,11 +286,11 @@ Keep in mind that there are no limitiation on creating new virtual instruments f
 
 [Back to the top](#simple-modularcontrol)
 
-__*WIP*__
-
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### _**<ins>4. Initialization</ins>**_ 
+
+__*WIP*__
 
 Configure all the devices in `core->mcUserInput.m`.\
 Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port)\ 
