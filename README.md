@@ -119,7 +119,7 @@ A driver function defines the translation of commands from the GUI into a form t
 __The wrapper function will use the hardware protocol defined in the driver to communicate with your device. This makes it simple to reconfigure the GUI in case the devices are disconnected and reconnnected to a different hardware port.__
 
 <details>
-<summary>More details on parameters defined within the included drivers:</summary>
+<summary>**<ins>More details on parameters defined within the included drivers:</ins>**</summary>
 <p>
 
 _For your reference (it is always a good ideal to keep your code readable!)_\
