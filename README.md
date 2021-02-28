@@ -108,7 +108,7 @@ To build a custom GUI for your microscope, follow these steps in order
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>1. Write a driver for your device</ins>**_
+### __<ins>1. Write a driver for your device</ins>__
 
 A driver function defines the translation of commands from the GUI into a form that can be interpreted by your device. You can think of this as the physcial hardware abstraction layer of the package.
 	
@@ -206,7 +206,7 @@ You may have to define new parmaters for your device.
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>2. Write a wrapper for your driver</ins>**_
+### __<ins>2. Write a wrapper for your driver</ins>__
 
 A wrapper is a class that utilizes the driver function to perform all communication with the device and converts runtime data into an `mc_object` container. The driver functions from step#1 are inherited as a static method within the wrapper class definition.
 >__Note:__ If you are using a pre-existing wrapper, please ensure that your new driver is registered as a static method within the wrapper. Refer to comments inside the example wrappers for more details.
@@ -240,7 +240,7 @@ end
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>3. Virtual Instruments</ins>**_ 
+### __<ins>3. Virtual Instruments</ins>__ 
 
 Some experiments require orchestration of multiple devices. In such cases you can define virtual drivers and wrappers that can encapsulate an instance of the real devices, with the experiment details being stored in a single mc_object. For example, if you need to actuate a servo controlled flip-mirror communicating via the DAQ digitalOutput and simultaneously readout the laser power from a GPIB power meter device. The individual drivers and wrappers for the flip-mirror and powermeter can be combined into a `mciPFlip` virtual instrument.
 
@@ -319,7 +319,7 @@ Keep in mind that there are no limitiation on creating new virtual instruments f
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>4. Initialization</ins>**_ 
+### __<ins>4. Initialization</ins>__ 
 
 __*WIP*__
 
@@ -331,7 +331,7 @@ Add device mc_object initialization to `setupObjects.m`. This utilizes all the d
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
-### _**<ins>5. User interface</ins>**_ 
+### __<ins>5. User interface</ins>__ 
 
 Add instrument elements to the UI in `ScopeConfig.m`.\
 Define the actions performed by the new UI elements in `Callbacks.m`
