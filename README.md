@@ -104,7 +104,21 @@ Here is how the GUI can be described in blocks
 &nbsp;
 ## How to configure your new microscope:
 
-To build a custom GUI for your microscope, follow these steps in order
+Download the package (simple_modularControl_vX.XX.zip) and extract the contents. Rename the extracted folder as 'simpleModularControl'. To run the package use `mcScope.m`.
+
+The first time you run the package, you will have to click through three setup popups:
+
+1. Confirm the location of simpleModularControl folder. The package will try to determine its current location automatically. You can confirm if correct or pick a different folder if it is incorrect. Note: this is used to figure out the path to important core files, the package will fail to load if the wrong folder is selected.
+
+2. Confirm the loaction for background data saving. The package will automatically save __all data__ to this background folder with the timestamp as the filename.
+
+3. Confirm the loaction for manual data saving. This is the folder that will open by default when you are saving manually.
+
+>__Note:__ After completion of the initial setup, the selected options will be saved in the `configs\your pc name\` folder as a .m file. If you see the setup popup during the second run then *someting has gone wrong* double check the folder selection. 
+
+&nbsp;
+
+__To build a custom GUI for your microscope, follow these steps in order:__
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
