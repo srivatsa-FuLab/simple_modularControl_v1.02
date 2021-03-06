@@ -337,17 +337,24 @@ Keep in mind that there are no limitiation on creating new virtual instruments f
 &nbsp;
 ### __<ins>4. Initialization</ins>__ 
 
-__*WIP*__
+There are two files that have to be modified for the initialization process:
 
-Configure all the devices in `core->mcUserInput.m`.\
-Here you can define mutiple devices that utilize the same driver and wrapper (eg. X and Y axis micrometers; X,Y and Z axis piezos; where each axis is essentially an independent device with a different hardware address/port)\ 
-Add device mc_object initialization to `setupObjects.m`. This utilizes all the devices and parameters defined in `mcUserInput.m`.
+1. Configure all the devices in `core->mcUserInput.m`. This file defines all the manual instrument controls.\
+	After defining all the instruments and device variants (i.e. Piezo-X, Piezo-Y, etc. that use the same driver and wrapper but different communication channel/hardware port), add the instruments to the `config.axesGroups` cell array. Please follow the detailed comments in the file to reconfigure for your microscope.
+	The manual user control GUI panel can be configured in the `function makeGUI(varin)` method.
+	
+2. Configure device for automated tasks such as confocal xy scanning, PLE, ODMR, etc in `@mcgScope->setupObjects.m`.
+	Here we can utilize all the instruments and device variants defined in the previous step. We import the 'config.axesGroups' from  `core->mcUserInput.m` and assign the instruments and devices to the mc_obj instances.
+	>__Note:__ Keep in mind that if you modify `config.axesGroups` in `core->mcUserInput.m` ensure that `@mcgScope->setupObjects.m` is modified accordingly. Please pay close attention to the cell indexing. If the device configurations in the two files do not match, you will recieve an error when running any automated task (like confocal).
+	
 
 [Back to the top](#simple-modularcontrol)
 
 <!--- ---------------------------------------------------------------------------------------------------------- --->
 &nbsp;
 ### __<ins>5. User interface</ins>__ 
+
+__*WIP*__
 
 Add instrument elements to the UI in `ScopeConfig.m`.\
 Define the actions performed by the new UI elements in `Callbacks.m`
