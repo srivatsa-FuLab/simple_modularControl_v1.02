@@ -34,7 +34,7 @@ classdef mcInput < mcSavableClass
         
         isOpen = false;         % Boolean.
         inUse = false;          % Boolean.
-        inEmulation = false;    % Boolean.
+        inEmulation = true;    % Boolean.
         isMeasuring = false;
     end
 
