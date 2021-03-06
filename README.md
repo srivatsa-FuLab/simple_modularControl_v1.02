@@ -26,6 +26,8 @@ A summary of the structure of this package with brief folder and file descriptor
 <pre>
 * mcScope.m		`This is the main function that runs the package`
 
+* mcUserInput.m		`All the instruments and devices are defined here`
+
 * @mcgScope
 	*       mcgScope.m			Wrapper __[Do not modify!]__
 	*       ScopeConfig.m			The GUI elements are defined here (Galvo scan, Piezo scan, optimize, etc.)
@@ -339,13 +341,13 @@ Keep in mind that there are no limitiation on creating new virtual instruments f
 
 There are two files that have to be modified for the initialization process:
 
-1. Configure all the devices in `core->mcUserInput.m`. This file defines all the manual instrument controls.\
+1. Configure all the devices in `mcUserInput.m`. This file defines all the manual instrument controls.\
 	After defining all the instruments and device variants (i.e. Piezo-X, Piezo-Y, etc. that use the same driver and wrapper but different communication channel/hardware port), add the instruments to the `config.axesGroups` cell array. Please follow the detailed comments in the file to reconfigure for your microscope.
 	The manual user control GUI panel can be configured in the `function makeGUI(varin)` method.
 	
 2. Configure device for automated tasks such as confocal xy scanning, PLE, ODMR, etc in `@mcgScope->setupObjects.m`.
-	Here we can utilize all the instruments and device variants defined in the previous step. We import the 'config.axesGroups' from  `core->mcUserInput.m` and assign the instruments and devices to the mc_obj instances.
-	>__Note:__ Keep in mind that if you modify `config.axesGroups` in `core->mcUserInput.m` ensure that `@mcgScope->setupObjects.m` is modified accordingly. Please pay close attention to the cell indexing. If the device configurations in the two files do not match, you will recieve an error when running any automated task (like confocal).
+	Here we can utilize all the instruments and device variants defined in the previous step. We import the 'config.axesGroups' from `mcUserInput.m` and assign the instruments and devices to the mc_obj instances.
+	>__Note:__ Keep in mind that if you modify `config.axesGroups` in `mcUserInput.m` ensure that `@mcgScope->setupObjects.m` is modified accordingly. Please pay close attention to the cell indexing. If the device configurations in the two files do not match, you will recieve an error when running any automated task (like confocal).
 	
 
 [Back to the top](#simple-modularcontrol)
