@@ -71,7 +71,6 @@ A summary of the structure of this package with brief folder and file descriptor
 * core			__[Do not modify!]__
 * mcJoystick		Joystick functionality
 * mcVideo		Interface to microscope live camera
-* user_data		Your data can be organized here
 * utility scripts 	Additional scripts that are used by the package such as peakfinder, etc.
 </pre>
 
