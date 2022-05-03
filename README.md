@@ -105,7 +105,7 @@ Here is how the GUI can be described in blocks
 &nbsp;
 ## How to configure your new microscope:
 
-Download the package (simple_modularControl_vX.XX.zip) and extract the contents. Rename the extracted folder as 'simpleModularControl'. To run the package use `mcScope.m`.
+Download the package (simple_modularControl_vX.XX.zip) and extract the contents. Rename the extracted folder as 'simple_modularControl'. To run the package use `mcScope.m`.
 
 The first time you run the package, you will have to click through three setup popups:
 
